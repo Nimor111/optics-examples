@@ -17,14 +17,8 @@ module Optics
 import           Control.Lens
 import           Data.Monoid
 
-newtype Name = Name String deriving Show
+newtype Name = Name String deriving (Show, Semigroup, Monoid)
 newtype Stock = Stock (Sum Int) deriving (Show, Semigroup, Monoid, Num)
-
-instance Semigroup Name where
-  (Name n1) <> (Name n2) = Name (n1 <> n2)
-
-instance Monoid Name where
-  mempty = Name ""
 
 type Response = [Bar]
 data Bar = Bar
