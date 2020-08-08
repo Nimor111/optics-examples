@@ -5,13 +5,8 @@
 {-# LANGUAGE TemplateHaskell            #-}
 
 module Optics
-    ( Response
-    , Bar
-    , Fridge
-    , Beer
-    , Name
-    , Stock
-    , stocks
+    ( stocks
+    , beerNames
     ) where
 
 import           Control.Lens
@@ -20,7 +15,6 @@ import           Data.Monoid
 newtype Name = Name String deriving (Show, Semigroup, Monoid)
 newtype Stock = Stock (Sum Int) deriving (Show, Semigroup, Monoid, Num)
 
-type Response = [Bar]
 data Bar = Bar
     { _barFridge :: Maybe Fridge
     }
@@ -54,5 +48,5 @@ main = do
     print $ over stocks (+1) bars
 
     print $ view beerNames bars
-    print $ set beerNames (Name "Ivan") bars
+    print $ set beerNames (Name "New name") bars
     print $ over beerNames (<> (Name "!")) bars
