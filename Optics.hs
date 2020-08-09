@@ -29,9 +29,20 @@ data Beer = Beer
     }
     deriving Show
 
-makeLenses ''Bar
-makeLenses ''Fridge
-makeLenses ''Beer
+barFridge :: Lens' Bar (Maybe Fridge)
+barFridge = lens _barFridge (\bar newFridge -> bar { _barFridge = newFridge })
+
+fridgeBeers :: Lens' Fridge [Beer]
+fridgeBeers = lens _fridgeBeers (\fridge newBeers -> fridge { _fridgeBeers = newBeers })
+
+beerStock :: Lens' Beer (Maybe Stock)
+beerStock = lens _beerStock (\beer newStock -> beer { _beerStock = newStock })
+
+beerName :: Lens' Beer (Maybe Name)
+beerName = lens _beerName (\beer newName -> beer { _beerName = newName })
+--makeLenses ''Bar
+--makeLenses ''Fridge
+--makeLenses ''Beer
 
 stocks = traverse.barFridge._Just.fridgeBeers.traverse.beerStock._Just
 beerNames = traverse.barFridge._Just.fridgeBeers.traverse.beerName._Just
@@ -43,6 +54,7 @@ main = do
             (Beer (Just $ Name "Corona Extra") (Just $ Stock (Sum 4)))
           , (Beer (Just $ Name "IPO Beer") (Just $ Stock (Sum 3)))
           ]))]
+    putStrLn "Lenses..."
     print $ view stocks bars
     print $ set stocks 10 bars
     print $ over stocks (+1) bars
