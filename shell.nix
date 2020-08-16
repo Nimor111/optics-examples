@@ -10,13 +10,15 @@ let
   ];
 
   ghcWithLens = haskellPackages.ghcWithPackages haskellDeps;
+  scalaDeps = [
+    pkgs.scala
+    pkgs.sbt
+    pkgs.jetbrains.idea-community
+  ];
 in
 pkgs.mkShell {
   buildInputs = [
     ghcWithLens
-
-    pkgs.scala
-    pkgs.sbt
-    pkgs.jetbrains.idea-community
+    scalaDeps
   ];
 }
