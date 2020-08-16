@@ -12,8 +12,11 @@ let
   ghcWithLens = haskellPackages.ghcWithPackages haskellDeps;
 in
 pkgs.mkShell {
-  name = "haskell-optics-shell";
   buildInputs = [
     ghcWithLens
+
+    pkgs.scala
+    pkgs.sbt
+    pkgs.jetbrains.idea-community
   ];
 }
